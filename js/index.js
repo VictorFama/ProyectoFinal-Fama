@@ -9,7 +9,6 @@ const CLIENTES = [
 //Cuando se envia el formulario de login
 document.querySelector('.form-container').addEventListener('submit', function(event) {
     event.preventDefault();
-    Swal.fire("SweetAlert2 is working!");
 
     //Obtengo los valores de alias y pin ingresados en el formulario
     const alias = document.getElementById('alias').value;
