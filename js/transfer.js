@@ -1,4 +1,11 @@
-function showTransfer(renderDesc, updateAccount, addLogoutButton) {
+/**
+ * Muestra la pantalla de transferencia y gestiona el envío de datos al actualizar la cuenta del usuario.
+ *
+ * @param {Function} renderDesc - Función para renderizar la UI de la sección.
+ * @param {Function} updateAccount - Función que ejecuta la transferencia en la cuenta.
+ * @param {Function} addLogoutButton - Función que agrega el botón de logout.
+ */
+function showTransfer(renderDesc, updateAccount, addLogoutButton, CLIENTES, alias) {
   renderDesc(`
     <div class="container text-center mb-4">
         <div class="row justify-content-center">
@@ -28,7 +35,7 @@ function showTransfer(renderDesc, updateAccount, addLogoutButton) {
   const btnTransfer = document.getElementById('btnTransfer');
   const inputAlias = document.getElementById('toAlias');
   const inputTransferAmount = document.getElementById('transferAmount');
-  btnTransfer.onclick = () => updateAccount(inputTransferAmount.value, 'Transferencia', inputAlias.value.trim());
+  btnTransfer.onclick = () => updateAccount(inputTransferAmount.value, 'Transferencia', alias, inputAlias.value.trim());
   addLogoutButton();
 }
 

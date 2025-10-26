@@ -1,5 +1,10 @@
-//Funcion para mostrar el retiro, cuando se confirma se llama a updateAccount para actualizar el balance
-function showWithdraw(renderDesc, updateAccount, addLogoutButton) {
+/**
+ * @description Muestra la vista de retiro y vincula el botón de confirmación. Cuando se hace clic en Confirm, llama a updateAccount para actualizar el balance.
+ * @param {Function} renderDesc - Renderiza la sección de retiro en pantalla.
+ * @param {Function} updateAccount - Aplica el retiro al usuario logueado.
+ * @param {Function} addLogoutButton - Agrega el botón de cerrar sesión a la vista.
+ */
+function showWithdraw(renderDesc, updateAccount, addLogoutButton, CLIENTES, alias) {
   renderDesc(`
     <div class="container text-center mb-4">
         <div class="row justify-content-center">
@@ -19,7 +24,7 @@ function showWithdraw(renderDesc, updateAccount, addLogoutButton) {
   `);
   const btnWithdraw = document.getElementById(`btnWithdraw`);
   const inputWithdraw = document.getElementById(`withdrawAmount`);
-  btnWithdraw.onclick = () => updateAccount(inputWithdraw.value, `Retiro`);
+  btnWithdraw.onclick = () => updateAccount(inputWithdraw.value, `Retiro`, alias);
   addLogoutButton();
 }
 

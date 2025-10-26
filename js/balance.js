@@ -1,5 +1,10 @@
-//funcion para mostrar el balance actual del usuario logueado
-function showBalance(renderDesc, addLogoutButton, CLIENTES, alias) {
+/**
+ * @description Muestra el balance actual del usuario logueado.
+ * @param {Function} renderDesc - Renderiza la vista del saldo en pantalla.
+ * @param {Function} addLogoutButton - Agrega el botón de cerrar sesión en la vista.
+ * @param {Array} CLIENTES - Lista completa de usuarios del sistema.
+ * @param {string} alias - Alias del usuario logueado para obtener su balance.
+ */function showBalance(renderDesc, addLogoutButton, CLIENTES, alias) {
     const user = CLIENTES.find(c => c.alias === alias);
     //console.log('usuario', user);
     const balance = user.balance;

@@ -45,151 +45,17 @@ function renderDesc(html) {
 
 const selected = document.querySelector(`input[name="radioDefault"]:checked`);
 if (selected) {
-  //console.log('id:', selected.id);
-  //console.log('value:', selected.value);
   const labelText = document.querySelector(`label[for="${selected.id}"]`)?.textContent.trim();
-  //console.log('label:', labelText);
 }
 
-/*
-//funcion para mostrar el balance actual del usuario logueado
-function showBalance() {
-    const user = CLIENTES.find(c => c.alias === alias);
-    //console.log('usuario', user);
-    const balance = user.balance;
-
-    renderDesc(`
-        <div class="container text-center mb-4">
-            <div class="row justify-content-center">
-                <div class="col-8 card">
-                    <div class="card-body">
-                    <h5 class="card-title mb-2">Saldo Actual.</h5>
-                    <p class="mb-0">Tu balance es: <strong>$${(balance.toFixed(2))}</strong>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `);
-    addLogoutButton();
-}*/
-
-/*
-//Funcion para mostrar el deposito, cuando se confirma se llama a updateAccount para actualizar el balance
-function showDeposit() {
-  renderDesc(`
-    <div class="container text-center mb-4">
-        <div class="row justify-content-center">
-            <div class="col-8 card">
-                <div class="card-body">
-                    <h5 class="card-title mb-2">Deposito</h5>
-                    <p class="mb-2">Ingrese la cantidad que desea depositar.</p>
-                    <div class="input-group">
-                    <span class="input-group-text">$</span>
-                    <input id="depositAmount" type="number" min="1" class="form-control" placeholder="Cantidad">
-                    <button class="btn btn-custom" id="btnDeposit">Confirm</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  `);
-  const btnDeposit = document.getElementById(`btnDeposit`);
-  const inputDeposit = document.getElementById(`depositAmount`);
-  btnDeposit.onclick = () => updateAccount(inputDeposit.value, `Deposito`);
-  addLogoutButton();
-}*/
-
-/*
-//Funcion para mostrar el retiro, cuando se confirma se llama a updateAccount para actualizar el balance
-function showWithdraw() {
-  renderDesc(`
-    <div class="container text-center mb-4">
-        <div class="row justify-content-center">
-            <div class="col-8 card">
-                <div class="card-body">
-                    <h5 class="card-title mb-2">Retiro</h5>
-                    <p class="mb-2">Ingrese la cantidad que desea retirar.</p>
-                    <div class="input-group">
-                    <span class="input-group-text">$</span>
-                    <input id="withdrawAmount" type="number" min="1" class="form-control" placeholder="Cantidad">
-                    <button class="btn btn-custom" id="btnWithdraw">Confirm</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  `);
-  const btnWithdraw = document.getElementById(`btnWithdraw`);
-  const inputWithdraw = document.getElementById(`withdrawAmount`);
-  btnWithdraw.onclick = () => updateAccount(inputWithdraw.value, `Retiro`);
-  addLogoutButton();
-}*/
-
-/*
-function showTransfer() {
-  renderDesc(`
-    <div class="container text-center mb-4">
-        <div class="row justify-content-center">
-            <div class="col-8 card">
-                <div class="card-body">
-                    <h5 class="card-title mb-2">Transferencia</h5>
-                    <p class="mb-2">Enviar dinero a otro usuario.</p>
-                    <div class="row g-2">
-                    <div class="col-md-6">
-                        <input id="toAlias" type="text" class="form-control" placeholder="Alias del destinatario">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                        <span class="input-group-text">$</span>
-                        <input id="transferAmount" type="number" min="1" class="form-control" placeholder="Cantidad">
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-custom" id="btnTransfer">Confirm</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  `);
-  const btnTransfer = document.getElementById('btnTransfer');
-  const inputAlias = document.getElementById('toAlias');
-  const inputTransferAmount = document.getElementById('transferAmount');
-  btnTransfer.onclick = () => updateAccount(inputTransferAmount.value, 'Transferencia', inputAlias.value.trim());
-  addLogoutButton();
-}
-  */
-/*
-//Funcion para mostrar el historial de transactions del usuario logueado
-function showHistory() {
-  const user = CLIENTES.find(c => c.alias === alias);
-  let transactionsHTML = '';
-  if (user.transactions.length === 0) {
-    transactionsHTML = '<p>No hay transacciones registradas.</p>';
-  } else {
-    transactionsHTML = user.transactions
-      .map(mov => `<p>${mov.type}: $${mov.amount.toFixed(2)} (Saldo: $${mov.actualBalance.toFixed(2)})</p>`)
-      .join('');
-  }
-
-  renderDesc(`
-    <div class="container text-center mb-4">
-        <div class="row justify-content-center">
-            <div class="col-8 card">
-                <div class="card-body">
-                    <h5 class="card-title mb-2">Historial</h5>
-                    ${transactionsHTML}
-                </div>
-            </div>
-        </div>
-    </div>
-  `);
-  addLogoutButton();
-}*/
-
-//Dependiendo del tipo de transaccion sumo los depositos, resto los retiros, guardo los transactions, actualizo el local storage y limpio los inputs
-function updateAccount(value, type, recipientAlias) {
+/**
+ * @description Dependiendo del tipo de transaccion sumo los depositos, resto los retiros, guardo los transactions, actualizo el local storage y limpio los inputs
+ * @param {number} value - Monto ingresado por el usuario.
+ * @param {'Deposito' | 'Retiro' | 'Transferencia'} type - Tipo de operación.
+ * @param {string} alias - Alias del usuario logueado.
+ * @param {string} [recipientAlias] - Alias del destinatario (solo para transferencias).
+ */
+function updateAccount(value, type, alias, recipientAlias = null) {
   const user = CLIENTES.find(c => c.alias === alias);
   const amount = parseFloat(value);
   if (isNaN(amount) || amount <= 0) 
@@ -282,8 +148,10 @@ function updateAccount(value, type, recipientAlias) {
         });
   }
 }
-
-//Funcion para agregar el boton de logout y borrar el usuario del localStorage
+/**
+ * @description Funcion para agregar el boton de logout y borrar el usuario del localStorage
+ * @returns {void}
+ */
 function addLogoutButton() {
   const logoutDiv = document.createElement(`div`);
   logoutDiv.className = `text-center mt-3`;
@@ -324,9 +192,9 @@ window.addEventListener(`DOMContentLoaded`, () => {
   if (selected) {
     switch (selected.id) {
       case `Balance`:   showBalance(renderDesc, addLogoutButton, CLIENTES, alias);  break;
-      case `Deposit`:   showDeposit(renderDesc, updateAccount, addLogoutButton);  break;
-      case `Withdraw`:  showWithdraw(renderDesc, updateAccount, addLogoutButton); break;
-      case `Transfer`:  showTransfer(renderDesc, updateAccount, addLogoutButton); break;
+      case `Deposit`:   showDeposit(renderDesc, updateAccount, addLogoutButton, CLIENTES, alias);  break;
+      case `Withdraw`:  showWithdraw(renderDesc, updateAccount, addLogoutButton, CLIENTES, alias); break;
+      case `Transfer`:  showTransfer(renderDesc, updateAccount, addLogoutButton, CLIENTES, alias); break;
       case `History`:   showHistory(renderDesc, addLogoutButton, CLIENTES, alias);  break;
     }
   }
@@ -339,9 +207,9 @@ document.addEventListener(`change`, (e) => {
     //console.log(`Seleccionado:`, { id, value });
     switch (id) {
       case `Balance`:   showBalance(renderDesc, addLogoutButton, CLIENTES, alias);  break;
-      case `Deposit`:   showDeposit(renderDesc, updateAccount, addLogoutButton);  break;
-      case `Withdraw`:  showWithdraw(renderDesc, updateAccount, addLogoutButton); break;
-      case `Transfer`:  showTransfer(renderDesc, updateAccount, addLogoutButton); break;
+      case `Deposit`:   showDeposit(renderDesc, updateAccount, addLogoutButton, CLIENTES, alias);  break;
+      case `Withdraw`:  showWithdraw(renderDesc, updateAccount, addLogoutButton, CLIENTES, alias); break;
+      case `Transfer`:  showTransfer(renderDesc, updateAccount, addLogoutButton, CLIENTES, alias); break;
       case `History`:   showHistory(renderDesc, addLogoutButton, CLIENTES, alias);  break;
     }
   }

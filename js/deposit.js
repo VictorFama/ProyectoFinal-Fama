@@ -1,4 +1,10 @@
-function showDeposit(renderDesc, updateAccount, addLogoutButton) {
+/**
+ * @description Muestra la vista de depósito y vincula el botón de confirmación. Cuando se hace clic en Confirm, llama a updateAccount para actualizar el balance.
+ * @param {Function} renderDesc - Renderiza la sección de depósito en pantalla.
+ * @param {Function} updateAccount - Aplica el depósito al usuario logueado.
+ * @param {Function} addLogoutButton - Agrega el botón de cerrar sesión a la vista.
+ */
+function showDeposit(renderDesc, updateAccount, addLogoutButton, CLIENTES, alias) {
   renderDesc(`
     <div class="container text-center mb-4">
         <div class="row justify-content-center">
@@ -18,7 +24,7 @@ function showDeposit(renderDesc, updateAccount, addLogoutButton) {
   `);
   const btnDeposit = document.getElementById(`btnDeposit`);
   const inputDeposit = document.getElementById(`depositAmount`);
-  btnDeposit.onclick = () => updateAccount(inputDeposit.value, `Deposito`);
+  btnDeposit.onclick = () => updateAccount(inputDeposit.value, `Deposito`, alias);
   addLogoutButton();
 }
 

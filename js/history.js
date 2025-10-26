@@ -1,4 +1,10 @@
-//Funcion para mostrar el historial de transactions del usuario logueado
+/**
+ * @description Muestra el historial de transacciones del usuario logueado.
+ * @param {Function} renderDesc - Renderiza la vista del historial.
+ * @param {Function} addLogoutButton - Agrega el botón de cerrar sesión a la vista.
+ * @param {Array} CLIENTES - Lista de clientes del sistema con sus transacciones.
+ * @param {string} alias - Alias del usuario logueado para mostrar su historial.
+ */
  function showHistory(renderDesc, addLogoutButton, CLIENTES, alias) {
   const user = CLIENTES.find(c => c.alias === alias);
   let transactionsHTML = '';
