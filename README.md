@@ -47,7 +47,9 @@ ProyectoFinal-Fama/
 ├📄 index.html            # Pantalla de inicio / login
 ├📄 principal.html        # Pantalla principal del cajero
 ├⚙️ .gitignore            # Archivos ignorados por Git
+├⚙️ clientes.json         # Fuente de datos inicial de los usuarios
 └📝 README.md             # Documentación del proyecto
+
 ```
 
 ---
