@@ -1,20 +1,34 @@
-//Creo el array de clientes con sus datos de alias y pin
-const CLIENTES = [  
-  { name: `Victor`,   alias: `victor`,    pin: `1234`},
-  { name: `Martin`,   alias: `martin`,    pin: `2222`},
-  { name: `Alicia`,   alias: `alicia`,    pin: `9999`},
-  { name: `Ruben`,    alias: `ruben`,     pin: `9999`}
-];
+let CLIENTES = [];
 
-//Cuando se envia el formulario de login
-document.querySelector('.form-container').addEventListener('submit', function(event) {
-    event.preventDefault();
+//Obtengo los datos de los clientes desde el archivo JSON y los guardo en la variable CLIENTES
+async function loadClientes() {
+  try {
+    const res = await fetch('./clientes.json');
+    CLIENTES = await res.json();
+  } catch (e) {
+    Swal.fire({
+      title: 'Error',
+      text: 'No se pudieron cargar los datos de los clientes.',
+      icon: 'error',
+      confirmButtonText: 'Aceptar'
+    })
+  }
+}
 
-    //Obtengo los valores de alias y pin ingresados en el formulario
-    const alias = document.getElementById('alias').value;
-    const pin = document.getElementById('pin').value;
 
-    const user = CLIENTES.find(c => c.alias.trim() === alias.trim() && c.pin === pin);
+async function initLogin() {
+    //Espero a que se carguen los clientes
+    await loadClientes(); 
+
+    //Cuando se envia el formulario de login
+    document.querySelector('.form-container').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        //Obtengo los valores de alias y pin ingresados en el formulario
+        const alias = document.getElementById('alias').value;
+        const pin = document.getElementById('pin').value;
+
+        const user = CLIENTES.find(c => c.alias.trim() === alias.trim() && c.pin === pin);
         if (user) {
             localStorage.setItem('user', JSON.stringify({ alias: user.alias, name: user.name }));
             Swal.fire({
@@ -34,4 +48,7 @@ document.querySelector('.form-container').addEventListener('submit', function(ev
                 confirmButtonText: 'Intentar de nuevo'
             });
         }
-});
+    });
+}
+
+initLogin();

@@ -1,0 +1,6 @@
+[
+  { "name": "Victor", "alias": "victor", "pin": "1234", "balance": 50000, "transactions": [] },
+  { "name": "Martin", "alias": "martin", "pin": "2222", "balance": 120000, "transactions": [] },
+  { "name": "Alicia", "alias": "alicia", "pin": "9999", "balance": 35000, "transactions": [] },
+  { "name": "Ruben", "alias": "ruben", "pin": "9999", "balance": 85000, "transactions": [] }
+]
